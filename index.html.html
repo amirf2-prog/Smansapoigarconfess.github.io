@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="SMANSAconfess - Curhat & tanya anonim untuk siswa SMAN 1 Poigar">
+  <title>SMANSAconfess • SMAN 1 Poigar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card: #ffffff;
+      --text: #222;
+      --text-secondary: #666;
+      --primary: #003366;
+      --accent: #e91e63;
+      --border: #e0e0e0;
+      --shadow: rgba(0, 0, 0, 0.08);
+    }
+
+    .dark {
+      --bg: #121212;
+      --card: #1e1e1e;
+      --text: #f0f0f0;
+      --text-secondary: #aaa;
+      --border: #333;
+      --shadow: rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    header h1::before {
+      content: "💬";
+    }
+
+    nav a {
+      color: white;
+      margin-left: 1.6rem;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 5rem 1rem 4rem;
+      background: linear-gradient(135deg, var(--primary), #0055aa);
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 2.3rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      opacity: 0.95;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      margin: 0.5rem;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    .btn.danger {
+      background: #d32f2f;
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Container */
+    .container {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.7rem;
+      color: var(--primary);
+      margin-bottom: 2.2rem;
+      font-weight: 600;
+    }
+
+    /* Refresh Button */
+    .refresh-btn {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Kategori Tabs */
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .category-tab {
+      padding: 0.6rem 1.2rem;
+      background: var(--border);
+      color: var(--text-secondary);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .category-tab.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Form Kirim */
+    .form-container {
+      background: var(--card);
+      padding: 2.2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 22px var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .char-count {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-align: right;
+      margin-top: 0.3rem;
+    }
+
+    .checkbox-group, .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin-top: 0.4rem;
+    }
+
+    .checkbox-group label, .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: normal;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.9rem 2rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .info-box {
+      margin-top: 1.6rem;
+      padding: 1.3rem;
+      background: #fff8e1;
+      border: 1px solid #ffd54f;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      color: #e65100;
+      line-height: 1.6;
+    }
+
+    /* Admin Login */
+    .admin-login {
+      max-width: 400px;
+      margin: 4rem auto;
+      padding: 2rem;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 6px 22px var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .admin-form input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .admin-form button {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #loginError {
+      color: #d32f2f;
+      text-align: center;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    /* Admin Dashboard */
+    .pending-item {
+      background: var(--card);
+      padding: 1.4rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .pending-text {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin: 0.6rem 0;
+    }
+
+    .pending-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .pending-actions button {
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .btn-approve {
+      background: #4caf50;
+      color: white;
+    }
+
+    .btn-reject {
+      background: #f44336;
+      color: white;
+    }
+
+    /* Question Item */
+    .question-item {
+      background: var(--card);
+      padding: 1.7rem;
+      margin-bottom: 1.8rem;
+      border-radius: 16px;
+      box-shadow: 0 5px 18px var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .sender {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin: 0.8rem 0;
+      color: var(--text);
+    }
+
+    .actions {
+      display: flex;
+      gap: 1.6rem;
+      font-size: 0.95rem;
+    }
+
+    .actions a {
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+    }
+
+    /* Reply */
+    .reply-form {
+      margin-top: 1.3rem;
+      padding-top: 1.2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .reply-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg);
+      color: var(--text);
+      resize: vertical;
+      height: 70px;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    .reply-form button {
+      margin-top: 0.7rem;
+      padding: 0.6rem 1.3rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .replies {
+      margin-top: 1.2rem;
+      padding: 1.1rem;
+      background: rgba(0, 51, 102, 0.06);
+      border-left: 3px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.95rem;
+    }
+
+    .replies p {
+      margin: 0.5rem 0;
+      color: var(--text);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2.8rem 1rem;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* Hide Pages */
+    [data-page] {
+      display: none;
+    }
+
+    [data-page="active"] {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>SMANSAconfess</h1>
+    <div>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+      <nav>
+        <a href="#" class="active" onclick="showPage('beranda')">Beranda</a>
+        <a href="#" onclick="showPage('kirim')">Kirim</a>
+        <a href="#" onclick="showPage('feed')">Feed</a>
+        <a href="#" onclick="showPage('admin-login')">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Beranda -->
+  <section data-page="active" id="page-beranda">
+    <section class="hero">
+      <h2>Welcome Guyss,,!</h2>
+      <p>Kamu bebas curhat, tanya, atau semangati teman — tanpa takut di-judge. 100% anonim & aman.</p>
+      <a href="#" class="btn primary" onclick="showPage('kirim')">Curhat Sekarang</a>
+      <a href="#" class="btn secondary" onclick="showPage('feed')">Baca Curhatan Teman</a>
+    </section>
+  </section>
+
+  <!-- Kirim Pertanyaan -->
+  <section data-page="kirim" id="page-kirim" style="display:none;">
+    <div class="container">
+      <h2 class="section-title">📝 Kirim Curhatanmu</h2>
+      <div class="form-container">
+        <form id="questionForm">
+          <div class="form-group">
+            <label for="question">Apa yang ingin kamu sampaikan? (max 300 karakter)</label>
+            <textarea 
+              id="question" 
+              class="form-control" 
+              maxlength="300" 
+              placeholder="Aku sering minder karena nilai jelek..."
+              required></textarea>
+            <div class="char-count"><span id="charCount">0</span>/300</div>
+          </div>
+
+          <div class="form-group">
+            <label>Kategori Curhatan</label>
+            <div class="checkbox-group">
+              <label><input type="radio" name="kategori" value="curhat" checked> Curhat</label>
+              <label><input type="radio" name="kategori" value="saran"> Saran</label>
+              <label><input type="radio" name="kategori" value="lucu"> Lucu</label>
+              <label><input type="radio" name="kategori" value="sekolah"> Sekolah</label>
+              <label><input type="radio" name="kategori" value="cinta"> Cinta</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Identitas</label>
+            <div class="radio-group">
+              <label><input type="radio" name="anonim" value="ya" checked> Anonim</label>
+              <label><input type="radio" name="anonim" value="tidak"> Gunakan Inisial</label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit">Kirim Curhatan</button>
+        </form>
+
+        <div class="info-box">
+          ℹ️ Curhatanmu akan ditinjau admin sebelum tayang.<br>
+          Dilarang: bully, SARA, atau menyebut nama orang langsung.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feed -->
+  <section data-page="feed" id="page-feed" style="display:none;" class="container">
+    <h2 class="section-title">💬 Curhat & Tanya Teman</h2>
+
+    <button onclick="refreshFeed()" class="refresh-btn">🔁 Refresh Feed</button>
+
+    <div class="category-tabs">
+      <div class="category-tab active" onclick="filterFeed('all')">Semua</div>
+      <div class="category-tab" onclick="filterFeed('curhat')">Curhat</div>
+      <div class="category-tab" onclick="filterFeed('saran')">Saran</div>
+      <div class="category-tab" onclick="filterFeed('lucu')">Lucu</div>
+      <div class="category-tab" onclick="filterFeed('sekolah')">Sekolah</div>
+      <div class="category-tab" onclick="filterFeed('cinta')">Cinta</div>
+    </div>
+
+    <div id="feed-questions">
+      <!-- Curhatan muncul di sini -->
+    </div>
+  </section>
+
+  <!-- Admin Login -->
+  <section data-page="admin-login" id="page-admin-login" style="display:none;" class="container">
+    <div class="admin-login">
+      <h2 style="text-align:center; margin-bottom:1.5rem;">🔐 Login Admin</h2>
+      <form class="admin-form" id="adminLoginForm">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Masuk</button>
+      </form>
+      <p id="loginError">Username atau password salah!</p>
+    </div>
+  </section>
+
+  <!-- Admin Dashboard -->
+  <section data-page="admin-dashboard" id="page-admin-dashboard" style="display:none;" class="container">
+    <h2 class="section-title">📋 Antrean Curhatan (Moderasi)</h2>
+
+    <button onclick="refreshAdmin()" class="refresh-btn">🔁 Muat Ulang Antrean</button>
+
+    <div id="pending-questions">
+      <!-- Pesan masuk muncul di sini -->
+    </div>
+    <p id="no-pending" style="text-align:center; color:var(--text-secondary);">Tidak ada curhatan menunggu.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 SMANSAconfess • SMAN 1 Poigar • Dikelola oleh OSIS & Guru BK</p>
+    <p><a href="mailto:bk@sman1poigar.sch.id">Kontak Admin</a></p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Admin Credentials
+    const ADMIN_USER = "OSISSMANSAPO";
+    const ADMIN_PASS = "ANONIM007";
+
+    // 1. Navigasi Halaman
+    function showPage(page) {
+      document.querySelectorAll('[data-page]').forEach(el => el.style.display = 'none');
+      document.getElementById(`page-${page}`).style.display = 'block';
+
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      if (page === 'beranda') document.querySelector('nav a:nth-child(1)').classList.add('active');
+      if (page === 'kirim') document.querySelector('nav a:nth-child(2)').classList.add('active');
+      if (page === 'feed') document.querySelector('nav a:nth-child(3)').classList.add('active');
+      if (page === 'admin-login' || page === 'admin-dashboard') {
+        document.querySelector('nav a:nth-child(4)').classList.add('active');
+      }
+
+      if (page === 'admin-dashboard' && !sessionStorage.getItem('admin')) {
+        showPage('admin-login');
+      }
+
+      if (page === 'feed') {
+        loadApprovedQuestions();
+        filterFeed('all');
+      }
+      if (page === 'admin-dashboard') loadPendingQuestions();
+    }
+
+    // 2. Login Admin
+    document.getElementById('adminLoginForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        sessionStorage.setItem('admin', 'true');
+        showPage('admin-dashboard');
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+      }
+    });
+
+    // 3. Kirim Curhatan
+    document.getElementById('questionForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const question = document.getElementById('question').value.trim();
+      if (!question) {
+        alert("Curhatan tidak boleh kosong!");
+        return;
+      }
+
+      const kategori = document.querySelector('input[name="kategori"]:checked').value;
+      const sender = document.querySelector('input[name="anonim"]:checked').value === 'tidak' ? 'Siswa' : 'Anonim';
+
+      const pending = JSON.parse(localStorage.getItem('smansacon_fess_pending') || '[]');
+      pending.push({
+        id: Date.now(),
+        text: question,
+        time: new Date().toLocaleString('id-ID'),
+        sender: sender,
+        kategori: kategori
+      });
+      localStorage.setItem('smansacon_fess_pending', JSON.stringify(pending));
+
+      alert("Terima kasih! Curhatanmu telah masuk ke antrean moderasi.");
+      this.reset();
+      document.getElementById('charCount').textContent = '0';
+    });
+
+    // 4. Muat Antrean (Admin)
+    function loadPendingQuestions() {
+      const container = document.getElementById('pending-questions');
+      const noPending = document.getElementById('no-pending');
+      const pending = JSON.parse(localStorage.getItem('smansacon_fess_pending') || '[]');
+
+      container.innerHTML = '';
+      if (pending.length === 0) {
+        noPending.style.display = 'block';
+      } else {
+        noPending.style.display = 'none';
+        pending.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'pending-item';
+          div.innerHTML = `
+            <p class="pending-text"><strong>[${capitalize(item.kategori)}]</strong> "${item.text}"</p>
+            <p class="meta">🕒 ${item.time} | 🧑 ${item.sender}</p>
+            <div class="pending-actions">
+              <button class="btn-approve" onclick="approveMessage(${item.id})">✅ Setujui</button>
+              <button class="btn-reject" onclick="rejectMessage(${item.id})">❌ Tolak</button>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      }
+    }
+
+    // 5. Setujui Pesan
+    function approveMessage(id) {
+      const pending = JSON.parse(localStorage.getItem('smansacon_fess_pending') || '[]');
+      const approved = JSON.parse(localStorage.getItem('smansacon_fess_approved') || '[]');
+      const message = pending.find(m => m.id === id);
+      if (message) {
+        approved.push(message);
+        localStorage.setItem('smansacon_fess_approved', JSON.stringify(approved));
+        localStorage.setItem('smansacon_fess_pending', JSON.stringify(pending.filter(m => m.id !== id)));
+        loadPendingQuestions();
+        loadApprovedQuestions();
+        filterFeed(getActiveFilter());
+        alert("Pesan disetujui dan akan muncul di feed.");
+      }
+    }
+
+    // 6. Tolak Pesan
+    function rejectMessage(id) {
+      const pending = JSON.parse(localStorage.getItem('smansacon_fess_pending') || '[]');
+      localStorage.setItem('smansacon_fess_pending', JSON.stringify(pending.filter(m => m.id !== id)));
+      loadPendingQuestions();
+      alert("Pesan ditolak dan dihapus.");
+    }
+
+    // 7. Refresh Feed (Siswa)
+    function refreshFeed() {
+      loadApprovedQuestions();
+      document.querySelector('.category-tab.active')?.click();
+      alert("Feed diperbarui! Curhatan terbaru sudah muncul.");
+    }
+
+    // 8. Refresh Admin
+    function refreshAdmin() {
+      loadPendingQuestions();
+      alert("Antrean curhatan berhasil dimuat ulang.");
+    }
+
+    // 9. Filter Feed
+    let currentFilter = 'all';
+    function filterFeed(kategori) {
+      currentFilter = kategori;
+      document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+      event?.target?.classList.add('active');
+      loadApprovedQuestions();
+    }
+    function getActiveFilter() { return currentFilter; }
+
+    // 10. Muat Pesan yang Disetujui
+    function loadApprovedQuestions() {
+      const container = document.getElementById('feed-questions');
+      const approved = JSON.parse(localStorage.getItem('smansacon_fess_approved') || '[]');
+      const filtered = currentFilter === 'all' ? approved : approved.filter(q => q.kategori === currentFilter);
+
+      container.innerHTML = '';
+      if (filtered.length === 0) {
+        container.innerHTML = `<p style="text-align:center; color:var(--text-secondary)">Belum ada curhatan di kategori <strong>${capitalize(currentFilter)}</strong>.</p>`;
+      } else {
+        filtered.forEach(msg => {
+          const div = document.createElement('div');
+          div.className = 'question-item';
+          div.innerHTML = `
+            <p><strong>${msg.sender} • #${capitalize(msg.kategori)}</strong></p>
+            <p class="question-text">"${msg.text}"</p>
+            <div class="meta">🕒 ${msg.time}</div>
+            <div class="actions">
+              <a href="#" onclick="toggleReply('reply-${msg.id}')">💬 Balas</a>
+            </div>
+            <div id="reply-${msg.id}" class="reply-form" style="display:none;">
+              <textarea placeholder="Tulis balasan..."></textarea>
+              <button onclick="addReply('reply-${msg.id}', 'q-${msg.id}')">Kirim</button>
+            </div>
+            <div class="replies" id="replies-q-${msg.id}"></div>
+          `;
+          container.appendChild(div);
+        });
+      }
+      loadReplies();
+    }
+
+    // 11. Balas
+    function toggleReply(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function addReply(formId, qId) {
+      const textarea = document.querySelector(`#${formId} textarea`);
+      const replyText = textarea.value.trim();
+      if (!replyText) {
+        alert("Balasan tidak boleh kosong!");
+        return;
+      }
+
+      const repliesEl = document.getElementById(`replies-${qId}`);
+      const p = document.createElement('p');
+      p.innerHTML = `<strong>Anonim:</strong> ${replyText}`;
+      repliesEl.appendChild(p);
+
+      const replies = JSON.parse(localStorage.getItem('smansacon_fess_replies') || '{}');
+      if (!replies[qId]) replies[qId] = [];
+      replies[qId].push(replyText);
+      localStorage.setItem('smansacon_fess_replies', JSON.stringify(replies));
+
+      textarea.value = '';
+      document.getElementById(formId).style.display = 'none';
+    }
+
+    function loadReplies() {
+      const replies = JSON.parse(localStorage.getItem('smansacon_fess_replies') || '{}');
+      for (const [qId, texts] of Object.entries(replies)) {
+        const el = document.getElementById(`replies-${qId}`);
+        if (el) {
+          texts.forEach(text => {
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>Anonim:</strong> ${text}`;
+            el.appendChild(p);
+          });
+        }
+      }
+    }
+
+    // 12. Ganti Tema
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    // 13. Helper
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // 14. Muat Saat Halaman Dibuka
+    window.onload = function() {
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+      }
+
+      const textarea = document.getElementById('question');
+      const charCount = document.getElementById('charCount');
+      if (textarea && charCount) {
+        charCount.textContent = textarea.value.length;
+        textarea.addEventListener('input', () => {
+          charCount.textContent = textarea.value.length;
+        });
+      }
+
+      if (sessionStorage.getItem('admin')) {
+        if (document.getElementById('page-admin-dashboard').style.display !== 'none') {
+          loadPendingQuestions();
+        }
+      }
+    };
+  </script>
+</body>
+</html>
